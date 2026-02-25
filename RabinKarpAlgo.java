@@ -13,6 +13,7 @@ public class RabinKarpAlgo {
         return hashcode;
     }
     public static void main(String args[]){
+        //Here we assuming that the text and pattern contains only small case letters
         String text , pattern;
         Scanner  sc = new Scanner(System.in);
         System.out.println("Enter a text :");
@@ -30,6 +31,8 @@ public class RabinKarpAlgo {
           System.out.println("pattern found");
           return;
         }
+        //since the text and pattern contains cmall case letters we are taking 26 as base and prime number is taken to avoid overflow and to reduce the collision
+        //assume you are working with binary string then you can take 2 as a base 
         int index = 0;
         long p = 1;
         for(int i=0;i<k-1;i++){
