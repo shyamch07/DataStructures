@@ -1,3 +1,39 @@
+class UnionBySize{
+    int parent[];
+    int size[];
+    UnionBySize(int n){
+        parent = new int[n];
+        size = new int[n];
+        for(int i=0;i<n;i++){
+            parent[i] = i;
+            size[i] = 1;
+        }
+    }
+    int findParent(int u){
+        if(parent[u] == u){
+            return u;
+        }
+        return parent[u] = findParent(parent[u]);
+    }
+    void disJoint(int u,int v){
+        int parentU = findParent(u);
+        int parentV = findParent(v);
+        if(parentU == parentV){
+            return;
+        }
+        if(size[parentU] < size[parentV]){
+            parent[parentU] = parentV;
+            size[parentV] += size[parentU];
+        }else if(size[parentV] < size[parentU]){
+            parent[parentV] = parentU;
+            size[parentU] += size[parentV];
+        }else{
+            parent[parentV] = parentU;
+            size[parentU] += size[parentV];
+        }
+
+    }
+}
 class UnionByRank { 
     int parent[];
     int rank[];
@@ -33,14 +69,14 @@ class UnionByRank {
 public class Union {
    public static void main(String args[]){
     int n = 5;
-    UnionByRank unionByRank = new UnionByRank(n);
-    unionByRank.disJoint(0, 2);
-    unionByRank.disJoint(4, 2);
-    unionByRank.disJoint(3, 1);
-    if(unionByRank.findParent(4) == unionByRank.findParent(0)){
-        System.out.println("Same");
+    UnionBySize unionBySize = new UnionBySize(n);
+    unionBySize.disJoint(0, 2);
+    unionBySize.disJoint(4, 2);
+    unionBySize.disJoint(3, 1);
+    if(unionBySize.findParent(4) == unionBySize.findParent(0)){
+        System.out.println("Both Nodes belongs to same Component");
     }else{
-        System.out.println("Not Same");
+        System.out.println("Both Nodes belongs to different Components");
     }
    }
 }
